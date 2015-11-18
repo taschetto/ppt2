@@ -19,6 +19,12 @@ void turnLed(int led, int value) {
   else digitalWrite(ledPin, LOW);
 }
 
+void allLeds(int value) {
+  int led = 0x00;
+  for (led = 0x00; led < 0x04; led++) 
+    turnLed(led, value);
+}
+
 void blink(int ledPin, int times)
 {
   int previousValue = digitalRead(ledPin);
@@ -57,6 +63,8 @@ void runCommand(int* bytes) {
     case 0x01: // comando para piscar leds de acordo com contagem de cliques 
       showCount(bytes[1], bytes[2]);
       break;
+    case 0x02:
+      allLeds(bytes[2]);
     default:
       break;
   }
