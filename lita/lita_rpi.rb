@@ -10,6 +10,7 @@ module Lita
   module Handlers
     class RpiController < Handler
 
+      route /destroy\s+earth/i, :destroy_earth, help: { "destroy earth" => "Destroys this pale blue planet."  }
       route /temp/i, :temp, help: { "temp" => "Shows temperature." }
       route /all\s+leds\s+(on|off)/i, :all_leds, help: { "all leds (on|off)" => "Turns all leds ON or OFF." }
       route /led\s+(0|1|2|3)\s+(on|off)/i, :led, help: { "led (0|1|2|3) (on|off)" => "Turns a led ON or OFF." }
@@ -41,6 +42,11 @@ module Lita
           cmd = [2.to_i, 0.to_i, value == "on" ? 1.to_i : 0.to_i, 13.to_i]
           tty.write(cmd.chr.join)
         end
+      end
+
+      def destroy_earth response
+        response.reply "Goodbye, #{response.user.name}."
+        response.reply "http://photos2.meetupstatic.com/photos/member/6/3/e/4/highres_33565572.jpeg"
       end
     end
 
